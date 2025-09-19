@@ -20,6 +20,7 @@ const OrdersManagement: React.FC = () => {
         .from('orders')
         .select(`
           *,
+          user_id,
           store:stores(*)
         `)
         .order('created_at', { ascending: false });
@@ -40,6 +41,7 @@ const OrdersManagement: React.FC = () => {
         .from('orders')
         .select(`
           *,
+          user_id,
           store:stores(*),
           items:order_items(*,
             product:products(*),

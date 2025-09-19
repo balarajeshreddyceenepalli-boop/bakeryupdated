@@ -25,6 +25,7 @@ const UserOrderDetails: React.FC = () => {
         .from('orders')
         .select(`
           id,
+          user_id,
           order_number,
           total_amount,
           delivery_type,
@@ -61,9 +62,16 @@ const UserOrderDetails: React.FC = () => {
         .single();
 
       if (error) throw error;
+      
+      // Additional security check
+      if (data.user_id !== user.id) {
+        throw new Error('Unauthorized access to order');
+      }
+      
       setOrder(data);
     } catch (error) {
       console.error('Error fetching order details:', error);
+      setOrder(null);
     } finally {
       setLoading(false);
     }

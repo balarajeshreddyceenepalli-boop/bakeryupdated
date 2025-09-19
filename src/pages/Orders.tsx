@@ -31,8 +31,13 @@ const Orders: React.FC = () => {
 
       if (error) throw error;
       setOrders(data || []);
-    } catch (error) {
+      
+      // Double-check user isolation on frontend
+      const userOrders = (data || []).filter(order => order.user_id === user.id);
+      setOrders(userOrders);
       console.error('Error fetching orders:', error);
+          user_id,
+      setOrders([]);
     } finally {
       setLoading(false);
     }

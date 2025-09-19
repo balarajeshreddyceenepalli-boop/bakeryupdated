@@ -88,6 +88,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const productIds = storeProducts?.map(sp => sp.product_id) || [];
         if (productIds.length > 0) {
           const filteredCartItems = cartItems.filter(item => 
+            item.user_id === user.id &&
             productIds.includes(item.product_id)
           );
           
@@ -95,19 +96,30 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             setItems([]);
             return;
           }
+          
+          const combinedItems = filteredCartItems.map(cartItem => ({
+            ...cartItem,
+            product: products?.find(p => p.id === cartItem.product_id),
+            flavor: flavors.find(f => f.id === cartItem.flavor_id)
+          }));
+
+          setItems(combinedItems);
         } else {
           setItems([]);
           return;
         }
+      } else {
+        // Filter cart items by user_id even when no store is selected
+        const userCartItems = cartItems.filter(item => item.user_id === user.id);
+        
+        const combinedItems = userCartItems.map(cartItem => ({
+          ...cartItem,
+          product: products?.find(p => p.id === cartItem.product_id),
+          flavor: flavors.find(f => f.id === cartItem.flavor_id)
+        }));
+
+        setItems(combinedItems);
       }
-
-      const combinedItems = cartItems.map(cartItem => ({
-        ...cartItem,
-        product: products?.find(p => p.id === cartItem.product_id),
-        flavor: flavors.find(f => f.id === cartItem.flavor_id)
-      }));
-
-      setItems(combinedItems);
     } catch (error) {
       console.error('Error fetching cart items:', error);
       setItems([]);
