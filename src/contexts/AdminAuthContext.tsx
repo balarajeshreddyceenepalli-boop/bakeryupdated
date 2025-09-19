@@ -45,13 +45,11 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   const signIn = async (email: string, password: string) => {
     try {
-      // For demo purposes, we'll use a simple check
-      // In production, you'd want proper password hashing and verification
       if (email === 'balarajeshreddyceenepalli@gmail.com' && password === 'Rajesh@1307') {
         const adminData: AdminUser = {
           id: '1',
           email: 'balarajeshreddyceenepalli@gmail.com',
-          full_name: 'Admin User',
+          full_name: 'Bala Rajesh Reddy',
           role: 'admin',
           is_active: true,
         };

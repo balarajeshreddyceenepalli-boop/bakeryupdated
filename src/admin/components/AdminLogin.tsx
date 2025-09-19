@@ -4,7 +4,7 @@ import { useAdminAuth } from '../../contexts/AdminAuthContext';
 
 const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState('admin@sweetdelights.com');
-  const [password, setPassword] = useState('admin123');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   
@@ -55,8 +55,8 @@ const AdminLogin: React.FC = () => {
 
           <div className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded-md">
             <p className="text-sm font-medium">Demo Credentials:</p>
-            <p className="text-sm">Email: admin@sweetdelights.com</p>
-            <p className="text-sm">Password: admin123</p>
+            <p className="text-sm">Email: balarajeshreddyceenepalli@gmail.com</p>
+            <p className="text-sm">Password: Rajesh@1307</p>
           </div>
 
           <div className="space-y-4">
