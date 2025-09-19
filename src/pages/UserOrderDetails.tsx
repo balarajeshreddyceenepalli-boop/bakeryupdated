@@ -24,11 +24,36 @@ const UserOrderDetails: React.FC = () => {
       const { data, error } = await supabase
         .from('orders')
         .select(`
-          *,
-          store:stores(*),
-          items:order_items(*,
-            product:products(*),
-            flavor:product_flavors(*)
+          id,
+          order_number,
+          total_amount,
+          delivery_type,
+          delivery_address,
+          customer_phone,
+          status,
+          payment_status,
+          notes,
+          created_at,
+          store:stores(
+            id,
+            name,
+            mobile,
+            address
+          ),
+          items:order_items(
+            id,
+            quantity,
+            unit_price,
+            total_price,
+            weight,
+            product:products(
+              id,
+              name
+            ),
+            flavor:product_flavors(
+              id,
+              flavor_name
+            )
           )
         `)
         .eq('id', orderId)

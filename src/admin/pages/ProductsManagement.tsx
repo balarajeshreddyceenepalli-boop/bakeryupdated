@@ -88,13 +88,35 @@ const ProductsManagement: React.FC = () => {
       const { data, error } = await adminSupabase
         .from('products')
         .select(`
-          *,
-          subcategory:subcategories(*,
-            category:categories(*)
+          id,
+          name,
+          base_price,
+          weight_options,
+          image_urls,
+          is_active,
+          is_featured,
+          subcategory_id,
+          subcategory:subcategories(
+            id,
+            name,
+            category:categories(
+              id,
+              name
+            )
           ),
-          flavors:product_flavors(*),
-          stores:product_store_fulfillment(*,
-            store:stores(*)
+          flavors:product_flavors(
+            id,
+            flavor_name,
+            price_adjustment,
+            is_available
+          ),
+          stores:product_store_fulfillment(
+            store_id,
+            is_available,
+            store:stores(
+              id,
+              name
+            )
           )
         `)
         .order('created_at', { ascending: false });

@@ -60,7 +60,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       const { data: products, error: productsError } = await supabase
         .from('products')
-        .select('id, name, base_price, weight_options, image_urls, subcategory_id')
+        .select('id, name, base_price, weight_options, image_urls')
         .in('id', productIds);
 
       if (productsError) throw productsError;
