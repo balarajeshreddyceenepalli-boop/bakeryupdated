@@ -61,14 +61,7 @@ const Header: React.FC = () => {
               <Search className="w-5 h-5" />
             </button>
 
-            {/* Location */}
-            <Link
-              to="/location"
-              className="p-2 text-gray-600 hover:text-amber-600 transition-colors"
-              title={selectedStore ? `Current: ${selectedStore.name}` : 'Select Location'}
-            >
-              <MapPin className="w-5 h-5" />
-            </Link>
+            
 
             {/* Location dropdown for desktop */}
             {selectedStore && (
