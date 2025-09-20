@@ -26,8 +26,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
+    supabase.auth.getSession().then(({ data: { session }, error }) => {
+      if (error && error.message.includes('Invalid Refresh Token')) {
+        // Clear stale session data and sign out
+        signOut();
+      } else {
+        setUser(session?.user ?? null);
+      }
       setLoading(false);
     });
 
@@ -43,15 +48,45 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    return await supabase.auth.signInWithPassword({ email, password });
+    try {
+      return await supabase.auth.signInWithPassword({ email, password });
+    } catch (error: any) {
+      if (error.message && error.message.includes('Invalid Refresh Token')) {
+        await signOut();
+      }
+      throw error;
+    }
   };
 
   const signUp = async (email: string, password: string) => {
-    return await supabase.auth.signUp({ email, password });
+    try {
+      return await supabase.auth.signUp({ email, password });
+    } catch (error: any) {
+      if (error.message && error.message.includes('Invalid Refresh Token')) {
+        await signOut();
+      }
+      throw error;
+    }
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    try {
+      await supabase.auth.signOut();
+    } catch (error) {
+      // Even if signOut fails, clear local storage
+      console.warn('SignOut error:', error);
+    } finally {
+      // Explicitly clear any remaining Supabase auth tokens from local storage
+      localStorage.removeItem('supabase.auth.token');
+      localStorage.removeItem('sb-dqwfrfcepctmudsfyrzo-auth-token');
+      // Clear any other potential auth-related items
+      Object.keys(localStorage).forEach(key => {
+        if (key.includes('supabase') || key.includes('auth')) {
+          localStorage.removeItem(key);
+        }
+      });
+      setUser(null);
+    }
   };
 
   const value = {
