@@ -37,18 +37,7 @@ const Categories: React.FC = () => {
 
         if (categoryError) throw categoryError;
         setSelectedCategory(categoryData);
-
-        // Fetch subcategories for this category
-        const { data: subcategoriesData, error: subcategoriesError } = await supabase
-          .from('subcategories')
-          .select('*')
-          .eq('category_id', activeCategoryId)
-          .eq('is_active', true)
-          .order('display_order');
-
-        if (subcategoriesError) throw subcategoriesError;
-        setSubcategories(subcategoriesData || []);
-
+        
         // Fetch products for this category
         let productsQuery = supabase
           .from('products')
