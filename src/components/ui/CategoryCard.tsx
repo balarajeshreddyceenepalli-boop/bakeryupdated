@@ -10,7 +10,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
   const imageUrl = category.image_url || 'https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg';
 
   return (
-    <Link to={`/categories/${category.id}`} className="group">
+    <Link to={`/categories?category=${category.id}`} className="group">
       <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
         <div className="relative">
           <img
