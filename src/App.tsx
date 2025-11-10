@@ -15,6 +15,7 @@ import Checkout from './pages/Checkout';
 import OrderSuccess from './pages/OrderSuccess';
 import Orders from './pages/Orders';
 import UserOrderDetails from './pages/UserOrderDetails';
+import Account from './pages/Account';
 import AdminLayout from './admin/AdminLayout';
 import AdminDashboard from './admin/pages/AdminDashboard';
 import AdminLogin from './admin/components/AdminLogin';
@@ -61,6 +62,7 @@ function App() {
                           <Route path="/order-success" element={<OrderSuccess />} />
                           <Route path="/orders" element={<Orders />} />
                           <Route path="/order-details/:orderId" element={<UserOrderDetails />} />
+                          <Route path="/account" element={<Account />} />
                         </Routes>
                       </main>
                       <Footer />
