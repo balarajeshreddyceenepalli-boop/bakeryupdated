@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { User, MapPin, Phone, Mail, Edit, Save, X, Plus, Trash2 } from 'lucide-react';
+import { User, MapPin, Phone, Mail, CreditCard as Edit, Save, X, Plus, Trash2 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
 import { UserProfile } from '../types';
